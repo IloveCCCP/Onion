@@ -1,6 +1,6 @@
-package node;
+package client;
 
-import coder.DirectoryMsgEncoder;
+import coder.NodeListRequestMsgEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,18 +9,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import node.NodeHandler;
+import node.ResponseDataDecoder;
 import util.Util;
 
-public class OnionNode {
+public class Client {
 
 
-
-    public static void main(String[] args) throws Exception {
-        OnionNode onionNode =new OnionNode();
-        onionNode.report();
-    }
-
-    void report(){
+    void requestNodeList(){
         Util.port= Util.getAvailablePort();
         String host = "localhost";
         int DirectoryPort = 8080;
@@ -34,7 +30,7 @@ public class OnionNode {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new DirectoryMsgEncoder(), new ResponseDataDecoder(), new NodeHandler());
+                    ch.pipeline().addLast(new NodeListRequestMsgEncoder(), new ResponseDataDecoder(), new NodeHandler());
                 }
             });
 
@@ -49,5 +45,8 @@ public class OnionNode {
         }
     }
 
+    public static void main(String[] args){
 
+
+    }
 }

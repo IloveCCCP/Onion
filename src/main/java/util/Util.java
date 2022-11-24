@@ -8,6 +8,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,6 +20,8 @@ public class Util {
     private static PrivateKey privateKey;
 
     public static int port;
+
+    public static List<String> nodeList=new ArrayList<>();
 
     public static int getAvailablePort(){
         int max = 65535;

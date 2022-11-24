@@ -1,14 +1,11 @@
 package node;
 
-import com.alibaba.fastjson2.JSON;
 import msg.DirectoryMsg;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import util.Util;
 
-import java.nio.charset.StandardCharsets;
-
-public class ClientHandler extends ChannelInboundHandlerAdapter {
+public class NodeHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         DirectoryMsg msg = new DirectoryMsg();
