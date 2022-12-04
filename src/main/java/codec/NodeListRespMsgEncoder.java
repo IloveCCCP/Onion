@@ -1,16 +1,13 @@
-package coder;
+package codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import msg.Msg;
-import msg.NodeListRequestMsg;
 import msg.NodeListResponseMsg;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class NodeListResponseMsgEncoder extends MessageToByteEncoder<NodeListResponseMsg> {
+public class NodeListRespMsgEncoder extends MessageToByteEncoder<NodeListResponseMsg> {
 
 
     @Override

@@ -1,5 +1,8 @@
 package util;
 
+import node.Config;
+import pojo.Node;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -12,16 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * 随机端口生成类
- */
 public class Util {
 
-    private static PrivateKey privateKey;
-
-    public static int port;
-
-    public static List<String> nodeList=new ArrayList<>();
 
     public static int getAvailablePort(){
         int max = 65535;
@@ -61,13 +56,13 @@ public class Util {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
         generator.initialize(2048);
         KeyPair pair = generator.generateKeyPair();
-        privateKey=pair.getPrivate();
+        Config.privateKey=pair.getPrivate();
         return pair.getPublic().getEncoded();
     }
 
     public static String decrypt(byte[] encripted) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException {
         Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+        decryptCipher.init(Cipher.DECRYPT_MODE, Config.privateKey);
         return new String(decryptCipher.doFinal(encripted), StandardCharsets.UTF_8);
     }
 

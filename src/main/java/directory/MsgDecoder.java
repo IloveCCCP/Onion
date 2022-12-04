@@ -1,13 +1,11 @@
 package directory;
 
-import coder.Decoder;
-import coder.DirectoryMsgDecoder;
-import coder.NodeListRequestMsgDecoder;
+import codec.Decoder;
+import codec.DirectoryMsgDecoder;
+import codec.NodeListReqMsgDecoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import msg.DirectoryMsg;
-import msg.Msg;
 import msg.MsgType;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public class MsgDecoder extends ByteToMessageDecoder {
 
 
         } else if(MsgType.GET_NODES.getValue()==type){
-            decoder=new NodeListRequestMsgDecoder();
+            decoder=new NodeListReqMsgDecoder();
         }
 //        DirectoryMsg data = new DirectoryMsg();
 //        int length=in.readInt();

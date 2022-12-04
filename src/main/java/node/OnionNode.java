@@ -1,6 +1,6 @@
 package node;
 
-import coder.DirectoryMsgEncoder;
+import codec.DirectoryMsgEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,13 +9,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import util.Util;
 
 public class OnionNode {
 
 
     void report(){
-        Util.port= Util.getAvailablePort();
+        //Util.port= Util.getAvailablePort();
         String host = "localhost";
         int DirectoryPort = 8080;
         EventLoopGroup workerGroup = new NioEventLoopGroup();

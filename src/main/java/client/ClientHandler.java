@@ -4,9 +4,15 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import msg.DirectoryMsg;
 import msg.NodeListRequestMsg;
+import msg.NodeListResponseMsg;
+import pojo.Node;
 import util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientHandler extends ChannelInboundHandlerAdapter {
+
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -18,7 +24,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(msg);
-        ctx.close();
+        if(msg instanceof NodeListResponseMsg){
+            Config.nodeList=((NodeListResponseMsg) msg).getNodeList();
+            for()
+        }
     }
 }

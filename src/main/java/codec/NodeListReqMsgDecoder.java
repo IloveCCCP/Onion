@@ -1,10 +1,10 @@
-package coder;
+package codec;
 
 import io.netty.buffer.ByteBuf;
 import msg.Msg;
 import msg.NodeListRequestMsg;
 
-public class NodeListRequestMsgDecoder extends Decoder{
+public class NodeListReqMsgDecoder extends Decoder{
 
 
     @Override

@@ -5,10 +5,8 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import msg.DirectoryMsg;
-import msg.NodeListRequestMsg;
-import msg.NodeListResponseMsg;
-import msg.ResponseMsg;
+import msg.*;
+import pojo.Node;
 import util.Util;
 
 import java.net.InetSocketAddress;
@@ -24,20 +22,25 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         if (msg instanceof DirectoryMsg) {
             DirectoryMsg requestData = (DirectoryMsg) msg;
-            ResponseMsg responseMsg = new ResponseMsg();
             String host = ((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress();
-            Util.nodeList.add(host + ":" + requestData.getPort());
-            responseMsg.setIntValue(requestData.getPort() * 2);
-            ChannelFuture future = ctx.writeAndFlush(responseMsg);
-            future.addListener(ChannelFutureListener.CLOSE);
+            Node node=new Node();
+            node.setIp(host);
+            node.setPort(((InetSocketAddress) ctx.channel().remoteAddress()).getPort());
+            node.setPublicKey(requestData.getPublicKey());
+            Config.nodeList.add(node);
+            RespMsg respMsg=new RespMsg();
+            respMsg.setErrorCode(ErrorCode.Success);
+            respMsg.setMsg("node added");
+            ChannelFuture future = ctx.writeAndFlush(respMsg);
+            //future.addListener(ChannelFutureListener.CLOSE);
             System.out.println(requestData);
         } else if(msg instanceof NodeListRequestMsg){
 
             NodeListResponseMsg nodeListResponseMsg=new NodeListResponseMsg();
-            nodeListResponseMsg.setNodeList(Util.nodeList);
+            nodeListResponseMsg.setNodeList(Config.nodeList);
             System.out.println("NodeListResponseMsg:"+JSON.toJSONString(nodeListResponseMsg));
             ChannelFuture future =ctx.writeAndFlush(nodeListResponseMsg);
-            future.addListener(ChannelFutureListener.CLOSE);
+            //future.addListener(ChannelFutureListener.CLOSE);
 
 
         }

@@ -1,4 +1,4 @@
-package coder;
+package codec;
 
 import com.alibaba.fastjson2.JSON;
 import io.netty.buffer.ByteBuf;
@@ -8,7 +8,7 @@ import msg.NodeListResponseMsg;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class NodeListResponseMsgDecoder extends Decoder{
+public class NodeListRespMsgDecoder extends Decoder{
 
 
     @Override

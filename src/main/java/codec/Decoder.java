@@ -1,4 +1,4 @@
-package coder;
+package codec;
 
 import io.netty.buffer.ByteBuf;
 import msg.Msg;

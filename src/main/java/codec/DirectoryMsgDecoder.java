@@ -1,8 +1,7 @@
-package coder;
+package codec;
 
 import io.netty.buffer.ByteBuf;
 import msg.DirectoryMsg;
-import msg.Msg;
 
 public class DirectoryMsgDecoder extends Decoder{
 
