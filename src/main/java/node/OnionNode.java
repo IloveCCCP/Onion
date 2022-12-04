@@ -14,12 +14,6 @@ import util.Util;
 public class OnionNode {
 
 
-
-    public static void main(String[] args) throws Exception {
-        OnionNode onionNode =new OnionNode();
-        onionNode.report();
-    }
-
     void report(){
         Util.port= Util.getAvailablePort();
         String host = "localhost";
@@ -34,7 +28,7 @@ public class OnionNode {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new DirectoryMsgEncoder(), new ResponseDataDecoder(), new NodeHandler());
+                    ch.pipeline().addLast(new DirectoryMsgEncoder(), new MsgDecoder(), new NodeHandler());
                 }
             });
 
@@ -49,5 +43,10 @@ public class OnionNode {
         }
     }
 
+
+    public static void main(String[] args) throws Exception {
+        OnionNode onionNode =new OnionNode();
+        onionNode.report();
+    }
 
 }

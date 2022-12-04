@@ -8,9 +8,4 @@ public class NodeListRequestMsg extends Msg{
     public MsgType getMsgType() {
         return msgType;
     }
-
-    public void setMsgType(MsgType msgType) {
-        this.msgType = msgType;
-    }
-
 }

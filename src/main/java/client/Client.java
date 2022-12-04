@@ -10,7 +10,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import node.NodeHandler;
-import node.ResponseDataDecoder;
+
 import util.Util;
 
 public class Client {
@@ -30,7 +30,7 @@ public class Client {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new NodeListRequestMsgEncoder(), new ResponseDataDecoder(), new NodeHandler());
+                    ch.pipeline().addLast(new NodeListRequestMsgEncoder(), new MsgDecoder(), new ClientHandler());
                 }
             });
 
@@ -46,7 +46,8 @@ public class Client {
     }
 
     public static void main(String[] args){
-
+        Client client=new Client();
+        client.requestNodeList();
 
     }
 }

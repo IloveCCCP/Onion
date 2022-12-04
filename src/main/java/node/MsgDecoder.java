@@ -7,7 +7,7 @@ import io.netty.handler.codec.ReplayingDecoder;
 
 import java.util.List;
 
-public class ResponseDataDecoder extends ReplayingDecoder<ResponseMsg> {
+public class MsgDecoder extends ReplayingDecoder<ResponseMsg> {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {

@@ -1,7 +1,7 @@
 package msg;
 
 public enum MsgType {
-    REGISTER(0), GET_NODES(1);
+    REGISTER(0), GET_NODES(1), NODE_LIST_RESP(2);
 
     public int getValue() {
         return value;

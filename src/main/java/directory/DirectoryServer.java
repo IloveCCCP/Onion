@@ -1,5 +1,6 @@
 package directory;
 
+import coder.NodeListResponseMsgEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -36,6 +37,7 @@ public class DirectoryServer {
                                 throws Exception {
                             ch.pipeline().addLast(new MsgDecoder(),
                                     new ResponseDataEncoder(),
+                                    new NodeListResponseMsgEncoder(),
                                     new ProcessingHandler());
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)
