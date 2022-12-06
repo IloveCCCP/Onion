@@ -27,6 +27,8 @@ public class ServiceHandler extends ChannelInboundHandlerAdapter {
 
 
                 Config.aesKey= decryptObj.getAesKey();
+                System.out.println("aesKey received:"+JSON.toJSONString(Config.aesKey));
+                System.out.println("payload received:"+json);
                 if(json.equals("null")){
                     return;
                 }

@@ -1,11 +1,13 @@
 package pojo;
 
+import javax.crypto.SecretKey;
+
 public class Node {
 
     String ip;
     int port;
 
-    byte[] aesKey;
+    SecretKey aesKey;
     byte[] publicKey;
 
     public String getIp() {
@@ -30,5 +32,13 @@ public class Node {
 
     public void setPublicKey(byte[] publicKey) {
         this.publicKey = publicKey;
+    }
+
+    public SecretKey getAesKey() {
+        return aesKey;
+    }
+
+    public void setAesKey(SecretKey aesKey) {
+        this.aesKey = aesKey;
     }
 }

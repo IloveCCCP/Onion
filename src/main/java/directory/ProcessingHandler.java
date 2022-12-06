@@ -22,6 +22,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         if (msg instanceof DirectoryMsg) {
             DirectoryMsg requestData = (DirectoryMsg) msg;
+
             String host = ((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress();
             Node node=new Node();
             node.setIp(host);
@@ -33,12 +34,12 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             respMsg.setMsg("node added");
             ChannelFuture future = ctx.writeAndFlush(respMsg);
             //future.addListener(ChannelFutureListener.CLOSE);
-            System.out.println(requestData);
+            System.out.println("node register:"+ JSON.toJSONString(requestData));
         } else if(msg instanceof NodeListRequestMsg){
 
             NodeListResponseMsg nodeListResponseMsg=new NodeListResponseMsg();
             nodeListResponseMsg.setNodeList(Config.nodeList);
-            System.out.println("NodeListResponseMsg:"+JSON.toJSONString(nodeListResponseMsg));
+            //System.out.println("NodeListResponseMsg:"+JSON.toJSONString(nodeListResponseMsg));
             ChannelFuture future =ctx.writeAndFlush(nodeListResponseMsg);
             //future.addListener(ChannelFutureListener.CLOSE);
 

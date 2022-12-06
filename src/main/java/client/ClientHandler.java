@@ -14,6 +14,7 @@ import pojo.Node;
 import pojo.NodeInfo;
 import util.Util;
 
+import javax.crypto.SecretKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +37,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             KeyExchangeReqMsg preKeyExchangeReqMsg=null;
             for(Node node:Config.nodeList){
                 KeyExchangeReqMsg keyExchangeReqMsg=new KeyExchangeReqMsg();
-                //if(preKeyExchangeReqMsg!=null) {
-                    keyExchangeReqMsg.setIp(node.getIp());
-                    keyExchangeReqMsg.setPort(node.getPort());
+                keyExchangeReqMsg.setIp(node.getIp());
+                keyExchangeReqMsg.setPort(node.getPort());
 
-                //}
-                Util.keyExchangeReqMsgGen(node.getPublicKey(), JSON.toJSONBytes(preKeyExchangeReqMsg),keyExchangeReqMsg);
+                SecretKey secretKey=Util.aesKeyGen();
+                Util.keyExchangeReqMsgGen(node.getPublicKey(), JSON.toJSONBytes(preKeyExchangeReqMsg),keyExchangeReqMsg,secretKey);
+                node.setAesKey(secretKey);
                 preKeyExchangeReqMsg=keyExchangeReqMsg;
 
             }

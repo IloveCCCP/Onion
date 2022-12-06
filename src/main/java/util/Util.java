@@ -95,8 +95,8 @@ public class Util {
         aesCipher.init(Cipher.DECRYPT_MODE, originalKey);
         return aesCipher.doFinal(enc);
     }
-    public static KeyExchangeReqMsg keyExchangeReqMsgGen(byte[] publicKey, byte[] payload, KeyExchangeReqMsg keyExchangeReqMsg) throws NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
-        SecretKey secretKey=aesKeyGen();
+    public static KeyExchangeReqMsg keyExchangeReqMsgGen(byte[] publicKey, byte[] payload, KeyExchangeReqMsg keyExchangeReqMsg, SecretKey secretKey) throws NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+
         keyExchangeReqMsg.setAesKeyEnc(Util.encrypt(secretKey.getEncoded(),publicKey));
         keyExchangeReqMsg.setPayload(Util.aesEncrypt(secretKey, payload));
         return keyExchangeReqMsg;
