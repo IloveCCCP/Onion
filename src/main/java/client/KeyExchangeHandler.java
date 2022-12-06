@@ -2,7 +2,6 @@ package client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import msg.NodeListRequestMsg;
 
 public class KeyExchangeHandler extends ChannelInboundHandlerAdapter {
     @Override

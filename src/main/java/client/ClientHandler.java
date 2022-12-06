@@ -20,8 +20,6 @@ import java.util.List;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
-    @Autowired
-    Client client;
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         NodeListRequestMsg nodeListRequestMsg=new NodeListRequestMsg();

@@ -1,10 +1,6 @@
 package node;
 
 import codec.DirectoryMsgEncoder;
-import codec.KeyExchangeReqMsgEncoder;
-import codec.NodeListRespMsgEncoder;
-import codec.RespMsgEncoder;
-import directory.ProcessingHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -14,8 +10,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.springframework.stereotype.Component;
 import util.Util;
-
-import java.util.List;
 
 @Component
 public class OnionNode extends Thread{
