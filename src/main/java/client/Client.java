@@ -1,20 +1,24 @@
 package client;
 
 import codec.KeyExchangeReqMsgEncoder;
+import codec.MessageMsgEncoder;
 import codec.NodeListReqMsgEncoder;
+import com.alibaba.fastjson2.JSON;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import msg.MessageMsg;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
+import pojo.Node;
+import util.Util;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -24,7 +28,7 @@ public class Client extends Thread{
     void init(){
         Client client=new Client();
         client.start();
-
+        input();
     }
 
     void input(){
@@ -33,8 +37,37 @@ public class Client extends Thread{
 
             System.out.println("Enter message");
 
-            String userName = myObj.nextLine();  // Read user input
+            sendMessage( myObj.nextLine());  // Read user input
 
+
+        }
+    }
+
+    void sendMessage(String message){
+        try {
+
+
+            MessageMsg preMessageMsg=null;
+            for (Node node : Config.nodeList) {
+                MessageMsg messageMsg = new MessageMsg();
+                messageMsg.setIp(node.getIp());
+                messageMsg.setPort(node.getPort());
+                if(preMessageMsg==null)
+                    messageMsg.setPayload( Util.aesEncrypt(node.getAesKey(), JSON.toJSONBytes("message:"+message)));
+                else
+                    messageMsg.setPayload( Util.aesEncrypt(node.getAesKey(), JSON.toJSONBytes(preMessageMsg)));
+                preMessageMsg=messageMsg;
+            }
+
+            Config.messageQueue.add(preMessageMsg);
+            List<ChannelHandler> channelHandlerList=new ArrayList<>();
+            channelHandlerList.add(new MessageMsgEncoder());
+            channelHandlerList.add( new KeyExchangeHandler());
+            Node lastNode=Config.nodeList.get(Config.nodeList.size()-1);
+            Util.connect(lastNode.getIp(),lastNode.getPort(),channelHandlerList);
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

@@ -1,9 +1,6 @@
 package node;
 
-import codec.Decoder;
-import codec.KeyExchangeRespMsgDecoder;
-import codec.RespMsgDecoder;
-import codec.RespMsgEncoder;
+import codec.*;
 import msg.MsgType;
 import msg.RespMsg;
 import msg.ResponseMsg;
@@ -25,6 +22,8 @@ public class MsgDecoder extends ReplayingDecoder<ResponseMsg> {
         } else if(MsgType.RESP.getValue()==type){
 
             decoder=new RespMsgDecoder();
+        } else if(MsgType.MESSAGE.getValue()==type){
+            decoder=new MessageMsgDecoder();
         }
 
         out.add(decoder.decode(in));

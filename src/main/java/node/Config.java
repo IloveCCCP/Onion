@@ -14,7 +14,5 @@ public class Config {
 
     public static int servicePort;
 
-    public static Queue<KeyExchangeReqMsg> keyExchangeQueue=new LinkedList();
-
     public static Queue messageQueue=new LinkedList();
 }
