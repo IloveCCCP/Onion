@@ -1,12 +1,7 @@
 package msg;
 
-import javax.crypto.SecretKey;
-
 public class KeyExchangeReqMsg extends Msg {
     MsgType type=MsgType.KEY_EXCHANGE_REQ;
-
-    byte[] aesKey;
-
     String ip;
 
     int port;
@@ -15,20 +10,20 @@ public class KeyExchangeReqMsg extends Msg {
 
     int aesKeyEncLength;
 
-    byte[] payLoad;
+    byte[] payload;
 
     int length;
     public MsgType getType() {
         return type;
     }
 
-    public byte[] getPayLoad() {
-        return payLoad;
+    public byte[] getPayload() {
+        return payload;
     }
 
-    public void setPayLoad(byte[] payLoad) {
-        this.payLoad = payLoad;
-        this.length= payLoad.length;
+    public void setPayload(byte[] payload) {
+        this.payload = payload;
+        this.length= payload.length;
     }
 
     public int getLength() {
@@ -58,14 +53,6 @@ public class KeyExchangeReqMsg extends Msg {
 
     public void setPort(int port) {
         this.port = port;
-    }
-
-    public byte[] getAesKey() {
-        return aesKey;
-    }
-
-    public void setAesKey(byte[] aesKey) {
-        this.aesKey = aesKey;
     }
 
     public int getAesKeyEncLength() {

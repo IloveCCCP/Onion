@@ -6,9 +6,8 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import msg.KeyExchangeReqMsg;
-import org.springframework.beans.factory.annotation.Autowired;
 import pojo.DecryptObj;
-import pojo.NodeInfo;
+import pojo.KeyExchange;
 import util.Util;
 
 import java.util.ArrayList;
@@ -25,17 +24,15 @@ public class ServiceHandler extends ChannelInboundHandlerAdapter {
                 DecryptObj decryptObj=Util.decKeyExchangeReqMsg((KeyExchangeReqMsg) msg);
 
                 String json= new String(decryptObj.getDecryptedPayLoad());
-                if(json.isBlank()){
-                    return;
-                }
-                KeyExchangeReqMsg keyExchangeReqMsg= JSON.parseObject(json, KeyExchangeReqMsg.class);
+
+
                 Config.aesKey= decryptObj.getAesKey();
-                if(keyExchangeReqMsg.getPayLoad()==null){
+                if(json.equals("null")){
                     return;
                 }
-                KeyExchangeReqMsg keyExchangeReqMsg1=new KeyExchangeReqMsg();
-                keyExchangeReqMsg1.setPayLoad(keyExchangeReqMsg.getPayLoad());
-                Config.keyExchangeQueue.add(keyExchangeReqMsg1);
+                KeyExchange keyExchange= JSON.parseObject(json, KeyExchange.class);
+                KeyExchangeReqMsg keyExchangeReqMsg=keyExchange.convertToMsg();
+                Config.messageQueue.add(keyExchangeReqMsg);
                 List<ChannelHandler> list=new ArrayList<>();
                 list.add(new MsgDecoder());
                 list.add(new KeyExchangeReqMsgEncoder());

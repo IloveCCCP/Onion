@@ -34,21 +34,19 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         if(msg instanceof NodeListResponseMsg){
             Config.nodeList=((NodeListResponseMsg) msg).getNodeList();
             KeyExchangeReqMsg preKeyExchangeReqMsg=null;
-            byte[] publicKey=null;
             for(Node node:Config.nodeList){
                 KeyExchangeReqMsg keyExchangeReqMsg=new KeyExchangeReqMsg();
-                if(preKeyExchangeReqMsg!=null) {
+                //if(preKeyExchangeReqMsg!=null) {
                     keyExchangeReqMsg.setIp(node.getIp());
                     keyExchangeReqMsg.setPort(node.getPort());
-                    Util.keyExchangeReqMsgGen(publicKey,JSON.toJSONBytes(preKeyExchangeReqMsg),keyExchangeReqMsg);
-                }
-                publicKey=node.getPublicKey();
+
+                //}
+                Util.keyExchangeReqMsgGen(node.getPublicKey(), JSON.toJSONBytes(preKeyExchangeReqMsg),keyExchangeReqMsg);
                 preKeyExchangeReqMsg=keyExchangeReqMsg;
 
             }
-            KeyExchangeReqMsg keyExchangeReqMsg=new KeyExchangeReqMsg();
-            Util.keyExchangeReqMsgGen(publicKey, JSON.toJSONBytes(preKeyExchangeReqMsg),keyExchangeReqMsg);
-            Config.messageQueue.add(keyExchangeReqMsg);
+
+            Config.messageQueue.add(preKeyExchangeReqMsg);
 
             List<ChannelHandler> channelHandlerList=new ArrayList<>();
             channelHandlerList.add(new KeyExchangeReqMsgEncoder());

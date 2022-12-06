@@ -7,10 +7,6 @@ public enum MsgType {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     private int value;
     MsgType(int value) {
         this.value=value;

@@ -1,6 +1,5 @@
 package util;
 
-import client.KeyExchangeHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -9,17 +8,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import msg.KeyExchangeReqMsg;
 import node.Config;
 import pojo.DecryptObj;
-import pojo.Node;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -102,7 +98,7 @@ public class Util {
     public static KeyExchangeReqMsg keyExchangeReqMsgGen(byte[] publicKey, byte[] payload, KeyExchangeReqMsg keyExchangeReqMsg) throws NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
         SecretKey secretKey=aesKeyGen();
         keyExchangeReqMsg.setAesKeyEnc(Util.encrypt(secretKey.getEncoded(),publicKey));
-        keyExchangeReqMsg.setPayLoad(Util.aesEncrypt(secretKey, payload));
+        keyExchangeReqMsg.setPayload(Util.aesEncrypt(secretKey, payload));
         return keyExchangeReqMsg;
 
 
@@ -112,7 +108,7 @@ public class Util {
          byte[] aesKey= decrypt(keyExchangeReqMsgEnc.getAesKeyEnc());
         DecryptObj decryptObj=new DecryptObj();
         decryptObj.setAesKey(aesKey);
-        decryptObj.setDecryptedPayLoad(Util.aesDecrypt(decryptObj.getAesKey(),keyExchangeReqMsgEnc.getPayLoad()));
+        decryptObj.setDecryptedPayLoad(Util.aesDecrypt(decryptObj.getAesKey(),keyExchangeReqMsgEnc.getPayload()));
          return decryptObj;
 
 
