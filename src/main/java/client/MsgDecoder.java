@@ -21,7 +21,9 @@ public class MsgDecoder extends ByteToMessageDecoder {
             decoder=new NodeListRespMsgDecoder();
 
         }
-
-        out.add( decoder.decode(in));
+        Msg msg=decoder.decode(in);
+        if(msg!=null) {
+            out.add(msg);
+        }
     }
 }

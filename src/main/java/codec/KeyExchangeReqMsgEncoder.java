@@ -10,6 +10,8 @@ public class KeyExchangeReqMsgEncoder extends MessageToByteEncoder<KeyExchangeRe
     protected void encode(ChannelHandlerContext ctx, KeyExchangeReqMsg msg, ByteBuf out) throws Exception {
         out.writeInt(msg.getType().getValue());
         out.writeInt(msg.getLength());
-        out.writeBytes(msg.getKeyEnc());
+        out.writeBytes(msg.getPayLoad());
+        out.writeInt(msg.getAesKeyEncLength());
+        out.writeBytes(msg.getAesKeyEnc());
     }
 }

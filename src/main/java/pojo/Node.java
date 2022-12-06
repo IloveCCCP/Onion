@@ -4,6 +4,8 @@ public class Node {
 
     String ip;
     int port;
+
+    byte[] aesKey;
     byte[] publicKey;
 
     public String getIp() {

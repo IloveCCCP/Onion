@@ -10,10 +10,16 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
+@Component
 public class Client {
 
-
+    @PostConstruct
     void requestNodeList(){
         String host = "localhost";
         int DirectoryPort = 8080;
@@ -71,8 +77,7 @@ public class Client {
     }
 
     public static void main(String[] args){
-        Client client=new Client();
-        client.requestNodeList();
+        AbstractApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
 
     }
 }

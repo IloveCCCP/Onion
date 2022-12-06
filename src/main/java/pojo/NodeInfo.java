@@ -1,8 +1,12 @@
 package pojo;
 
+import javax.crypto.SecretKey;
+
 public class NodeInfo {
     String ip;
     int port;
+
+    SecretKey aesKey;
 
     byte[] payload;
 
@@ -31,6 +35,11 @@ public class NodeInfo {
     }
 
 
+    public SecretKey getAesKey() {
+        return aesKey;
+    }
 
-
+    public void setAesKey(SecretKey aesKey) {
+        this.aesKey = aesKey;
+    }
 }

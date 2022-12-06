@@ -11,7 +11,7 @@ public class NodeHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         DirectoryMsg msg = new DirectoryMsg();
 
-        //msg.setPort(Util.port);
+        msg.setPort(Config.servicePort);
         msg.setPublicKey(Util.generateKey());
         ctx.writeAndFlush(msg);
     }

@@ -1,7 +1,9 @@
 package msg;
 
 import com.alibaba.fastjson2.JSON;
+import pojo.Node;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class NodeListResponseMsg extends Msg{
 
 
     public List getNodeList() {
-        return JSON.parseObject(nodeListJson , ArrayList.class);
+        return JSON.parseArray(nodeListJson , Node.class);
     }
 
     public String getNodeListJson(){
@@ -32,7 +34,7 @@ public class NodeListResponseMsg extends Msg{
 
     public void setNodeList(List nodeList) {
         this.nodeListJson=JSON.toJSONString(nodeList);
-        length=nodeListJson.length();
+        length=nodeListJson.getBytes(StandardCharsets.UTF_8).length;
     }
 
 

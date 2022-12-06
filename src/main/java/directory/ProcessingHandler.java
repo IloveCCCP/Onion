@@ -25,7 +25,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             String host = ((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress();
             Node node=new Node();
             node.setIp(host);
-            node.setPort(((InetSocketAddress) ctx.channel().remoteAddress()).getPort());
+            node.setPort(requestData.getPort());
             node.setPublicKey(requestData.getPublicKey());
             Config.nodeList.add(node);
             RespMsg respMsg=new RespMsg();
