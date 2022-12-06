@@ -78,33 +78,6 @@ public class OnionNode extends Thread{
         }
     }
 
-    void connect(String ip, int port, List<ChannelHandler> channelHandlerList){
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-
-        try {
-            Bootstrap b = new Bootstrap();
-            b.group(workerGroup);
-            b.channel(NioSocketChannel.class);
-            b.option(ChannelOption.SO_KEEPALIVE, true);
-            b.handler(new ChannelInitializer<SocketChannel>() {
-                @Override
-                public void initChannel(SocketChannel ch) throws Exception {
-                    for(ChannelHandler channelHandler:channelHandlerList)
-                    ch.pipeline().addLast(channelHandler);
-                }
-            });
-
-            ChannelFuture f = b.connect(ip, port).sync();
-            f.channel().closeFuture().sync();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            workerGroup.shutdownGracefully();
-        }
-    }
-
-
     public static void main(String[] args) throws Exception {
         OnionNode onionNode =new OnionNode();
 
