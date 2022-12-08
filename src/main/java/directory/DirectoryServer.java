@@ -21,7 +21,7 @@ public class DirectoryServer {
 
         port = args.length > 0
                 ? Integer.parseInt(args[0]): 8080;
-
+        System.out.println("serving port:"+port);
         new DirectoryServer().run();
     }
 

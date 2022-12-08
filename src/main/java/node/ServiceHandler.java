@@ -57,7 +57,7 @@ public class ServiceHandler extends ChannelInboundHandlerAdapter {
                 }
 
                 MessageMsg messageMsg=JSON.parseObject(json,MessageMsg.class);
-                System.out.println("message payload decrypted:"+JSON.toJSONString(messageMsg.convert()));
+                System.out.println("message payload decrypted:"+JSON.toJSONString(messageMsg.convert(),JSONWriter.Feature.PrettyFormat));
                 List<ChannelHandler> channelHandlerList=new ArrayList<>();
                 channelHandlerList.add(new MessageMsgEncoder());
                 channelHandlerList.add( new ToNodeHandler());
