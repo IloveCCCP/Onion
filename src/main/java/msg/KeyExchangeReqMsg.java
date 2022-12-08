@@ -1,5 +1,9 @@
 package msg;
 
+import pojo.KeyExchangeReq;
+
+import java.util.Base64;
+
 public class KeyExchangeReqMsg extends Msg {
     MsgType type=MsgType.KEY_EXCHANGE_REQ;
     String ip;
@@ -57,5 +61,12 @@ public class KeyExchangeReqMsg extends Msg {
 
     public int getAesKeyEncLength() {
         return aesKeyEncLength;
+    }
+
+    public KeyExchangeReq convert(){
+        KeyExchangeReq keyExchangeReq=new KeyExchangeReq();
+        keyExchangeReq.setAesKeyEnc(Base64.getEncoder().encodeToString(aesKeyEnc));
+        keyExchangeReq.setPayload(Base64.getEncoder().encodeToString(payload));
+        return keyExchangeReq;
     }
 }

@@ -1,5 +1,8 @@
 package util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -140,7 +143,19 @@ public class Util {
         }
     }
 
+    public static String formatJson(String jsonString){
+        try {
 
+
+            JSONObject object = JSONObject.parseObject(jsonString);
+            return JSON.toJSONString(object, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+                    SerializerFeature.WriteDateUseDateFormat);
+        }catch (Exception e){
+            return jsonString;
+        }
+
+
+    }
 
 
 }

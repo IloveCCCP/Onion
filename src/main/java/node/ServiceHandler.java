@@ -3,6 +3,7 @@ package node;
 import codec.KeyExchangeReqMsgEncoder;
 import codec.MessageMsgEncoder;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -21,15 +22,15 @@ public class ServiceHandler extends ChannelInboundHandlerAdapter {
         if(msg instanceof KeyExchangeReqMsg){
 
             try {
-
+                System.out.println("key exchange payload encrypted received:"+ JSON.toJSONString(((KeyExchangeReqMsg) msg).convert(), JSONWriter.Feature.PrettyFormat));
                 DecryptObj decryptObj=Util.decKeyExchangeReqMsg((KeyExchangeReqMsg) msg);
 
                 String json= new String(decryptObj.getDecryptedPayLoad());
 
 
                 Config.aesKey= decryptObj.getAesKey();
-                System.out.println("aesKey received:"+JSON.toJSONString(Config.aesKey));
-                System.out.println("payload received:"+json);
+                System.out.println("aesKey decrypted:"+JSON.toJSONString(Config.aesKey));
+                System.out.println("key exchange payload decrypted:"+ Util.formatJson(json));
                 if(json.equals("null")){
                     return;
                 }
@@ -47,15 +48,16 @@ public class ServiceHandler extends ChannelInboundHandlerAdapter {
             }
         } else if(msg instanceof MessageMsg){
             try {
+                System.out.println("message payload encrypted received:"+ JSON.toJSONString(((MessageMsg) msg).convert(), JSONWriter.Feature.PrettyFormat));
                 byte[] payload=Util.aesDecrypt(Config.aesKey, ((MessageMsg) msg).getPayload());
                 String json=new String(payload);
                 if(json.startsWith("\"message:")){
-                    System.out.println("message received:"+ json);
+                    System.out.println("message decrypted:"+ json);
                     return;
-                } else {
-                    System.out.println("message payload:"+json);
                 }
+
                 MessageMsg messageMsg=JSON.parseObject(json,MessageMsg.class);
+                System.out.println("message payload decrypted:"+JSON.toJSONString(messageMsg.convert()));
                 List<ChannelHandler> channelHandlerList=new ArrayList<>();
                 channelHandlerList.add(new MessageMsgEncoder());
                 channelHandlerList.add( new ToNodeHandler());

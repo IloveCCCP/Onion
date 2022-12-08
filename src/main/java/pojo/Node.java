@@ -1,6 +1,10 @@
 package pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.crypto.SecretKey;
+import java.io.Serializable;
+import java.util.Base64;
 
 public class Node {
 
@@ -10,6 +14,7 @@ public class Node {
     SecretKey aesKey;
     byte[] publicKey;
 
+    String publicKeyString;
     public String getIp() {
         return ip;
     }
@@ -32,6 +37,7 @@ public class Node {
 
     public void setPublicKey(byte[] publicKey) {
         this.publicKey = publicKey;
+        this.publicKeyString= Base64.getEncoder().encodeToString(publicKey);
     }
 
     public SecretKey getAesKey() {
@@ -40,5 +46,9 @@ public class Node {
 
     public void setAesKey(SecretKey aesKey) {
         this.aesKey = aesKey;
+    }
+
+    public String getPublicKeyString() {
+        return publicKeyString;
     }
 }

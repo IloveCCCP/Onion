@@ -1,6 +1,7 @@
 package directory;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -33,15 +34,14 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             respMsg.setErrorCode(ErrorCode.Success);
             respMsg.setMsg("node added");
             ChannelFuture future = ctx.writeAndFlush(respMsg);
-            //future.addListener(ChannelFutureListener.CLOSE);
-            System.out.println("node register:"+ JSON.toJSONString(requestData));
+            SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
+            filter.getExcludes().add("publicKey");
+            System.out.println("node register:"+ JSON.toJSONString(node,filter));
         } else if(msg instanceof NodeListRequestMsg){
 
             NodeListResponseMsg nodeListResponseMsg=new NodeListResponseMsg();
             nodeListResponseMsg.setNodeList(Config.nodeList);
-            //System.out.println("NodeListResponseMsg:"+JSON.toJSONString(nodeListResponseMsg));
             ChannelFuture future =ctx.writeAndFlush(nodeListResponseMsg);
-            //future.addListener(ChannelFutureListener.CLOSE);
 
 
         }

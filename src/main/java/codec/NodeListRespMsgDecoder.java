@@ -1,6 +1,8 @@
 package codec;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
 import io.netty.buffer.ByteBuf;
 import msg.Msg;
 import msg.NodeListResponseMsg;
@@ -20,7 +22,9 @@ public class NodeListRespMsgDecoder extends Decoder{
         }
         String listJson=in.readCharSequence(length, StandardCharsets.UTF_8).toString();
         nodeListResponseMsg.setNodeList(JSON.parseObject(listJson, ArrayList.class));
-        System.out.println("NodeListResponseMsg:" + JSON.toJSONString(nodeListResponseMsg));
+        SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
+        filter.getExcludes().add("publicKey");
+        System.out.println("NodeListResponseMsg:" + JSON.toJSONString(nodeListResponseMsg.convert(),filter, JSONWriter.Feature.PrettyFormat));
 
 
         return nodeListResponseMsg;

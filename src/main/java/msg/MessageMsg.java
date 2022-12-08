@@ -1,5 +1,9 @@
 package msg;
 
+import pojo.Message;
+
+import java.util.Base64;
+
 public class MessageMsg extends Msg{
 
     MsgType type=MsgType.MESSAGE;
@@ -43,5 +47,13 @@ public class MessageMsg extends Msg{
 
     public int getLength() {
         return length;
+    }
+
+    public Message convert(){
+        Message message=new Message();
+        message.setIp(ip);
+        message.setPort(port);
+        message.setPayload(Base64.getEncoder().encodeToString(payload));
+        return message;
     }
 }

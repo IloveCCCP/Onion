@@ -1,10 +1,11 @@
 package msg;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
+import node.NodeListResp;
 import pojo.Node;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 public class NodeListResponseMsg extends Msg{
@@ -33,12 +34,18 @@ public class NodeListResponseMsg extends Msg{
     }
 
     public void setNodeList(List nodeList) {
-        this.nodeListJson=JSON.toJSONString(nodeList);
+        SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
+        filter.getExcludes().add("publicKeyString");
+        this.nodeListJson=JSON.toJSONString(nodeList,filter);
         length=nodeListJson.getBytes(StandardCharsets.UTF_8).length;
     }
 
 
-
+    public NodeListResp convert(){
+        NodeListResp nodeListResp=new NodeListResp();
+        nodeListResp.setNodeList(getNodeList());
+        return nodeListResp;
+    }
 
 
 

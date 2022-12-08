@@ -25,13 +25,14 @@ import java.util.Scanner;
 public class Client extends Thread{
 
     @PostConstruct
-    void init(){
+    void init() throws InterruptedException {
         Client client=new Client();
         client.start();
         input();
     }
 
-    void input(){
+    void input() throws InterruptedException {
+        Thread.sleep(2000);
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         while (true){
 

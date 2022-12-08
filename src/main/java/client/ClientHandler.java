@@ -2,6 +2,7 @@ package client;
 
 import codec.KeyExchangeReqMsgEncoder;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSONWriter;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -18,6 +19,8 @@ import javax.crypto.SecretKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import static client.Config.nodeList;
+
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -31,9 +34,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if(msg instanceof NodeListResponseMsg){
-            Config.nodeList=((NodeListResponseMsg) msg).getNodeList();
+            nodeList=((NodeListResponseMsg) msg).getNodeList();
+
             KeyExchangeReqMsg preKeyExchangeReqMsg=null;
-            for(Node node:Config.nodeList){
+            for(Node node: nodeList){
                 KeyExchangeReqMsg keyExchangeReqMsg=new KeyExchangeReqMsg();
                 keyExchangeReqMsg.setIp(node.getIp());
                 keyExchangeReqMsg.setPort(node.getPort());
@@ -51,7 +55,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             channelHandlerList.add(new KeyExchangeReqMsgEncoder());
             channelHandlerList.add(new KeyExchangeHandler());
 
-            Node lastNode=Config.nodeList.get(Config.nodeList.size()-1);
+            Node lastNode= nodeList.get(nodeList.size()-1);
             Util.connect(lastNode.getIp(),lastNode.getPort(),channelHandlerList);
         }
     }
