@@ -8,9 +8,9 @@ Usage
 ----------
 Start up:  
 1. Run directory/DirectoryServer.
-2. Run as many as number of node/OnionNode you like.
+2. Run as many numbers of node/OnionNode you like.
 3. Run client/Client.
-4. Enter messages in client.
+4. Enter messages in the client.
 5. Check the console in the nodes to see the data flow. 
 Structure
 ----------
