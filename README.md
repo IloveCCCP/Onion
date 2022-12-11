@@ -7,9 +7,12 @@ Onion is an Onion Routing simulation project. Implemented using Netty, AES, RSA 
 Usage
 ----------
 Start up:  
-1. Run directory/DirectoryServer.
-2. Run as many numbers of node/OnionNode you like.
-3. Run client/Client.
+1. Run directory/DirectoryServer.  
+   mvn exec:java -D"exec.mainClass"="directory.DirectoryServer"
+2. Run as many numbers of node/OnionNode you like.  
+   mvn exec:java -D"exec.mainClass"="node.OnionNode"
+3. Run client/Client.  
+   mvn exec:java -D"exec.mainClass"="client.Client"
 4. Enter messages in the client.
 5. Check the console in the nodes to see the data flow. 
 
