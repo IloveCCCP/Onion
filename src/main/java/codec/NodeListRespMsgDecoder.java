@@ -17,8 +17,9 @@ public class NodeListRespMsgDecoder extends Decoder{
     public Msg decode(ByteBuf in) {
         NodeListResponseMsg nodeListResponseMsg=new NodeListResponseMsg();
         int length=in.readInt();
-        while(in.readableBytes()<length){
-            //return null;
+        if(in.readableBytes()<length){
+            in.resetReaderIndex();
+            return null;
         }
         String listJson=in.readCharSequence(length, StandardCharsets.UTF_8).toString();
         nodeListResponseMsg.setNodeList(JSON.parseObject(listJson, ArrayList.class));

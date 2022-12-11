@@ -16,6 +16,7 @@ public class MsgDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        in.markReaderIndex();
         int type= in.readInt();
         if(type== MsgType.NODE_LIST_RESP.getValue()){
             decoder=new NodeListRespMsgDecoder();
