@@ -7,7 +7,7 @@ Onion is an Onion Routing simulation project. Implemented using Netty, AES, RSA 
 Usage
 ----------
 Environment: Windows, JDK 19, MAVEN
-Go to directory 'Onion/' 
+Go to directory 'Onion/'  
 Start up:  
 1. Run directory/DirectoryServer.  
    mvn exec:java -D"exec.mainClass"="directory.DirectoryServer"
